@@ -1,0 +1,22 @@
+{
+  "name": "twibbon-alyasini",
+  "version": "1.0.0",
+  "description": "Web Twibbon Resmi Pondok Pesantren Terpadu Al-Yasini - Haul Masyayikh Ke-24 & Silatnas Insani Alyasini 2026",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "backup": "node scripts/backup-db.js",
+    "test": "node scripts/test-api.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "twibbon",
+    "alyasini",
+    "pesantren",
+    "haul-24"
+  ],
+  "author": "Pondok Pesantren Terpadu Al-Yasini",
+  "license": "ISC"
+}

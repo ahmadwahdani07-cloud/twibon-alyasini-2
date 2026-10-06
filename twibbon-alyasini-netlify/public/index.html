@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twibbon Resmi - Haul Masyayikh Ke-24 & Silatnas Insani Alyasini</title>
+  <link rel="stylesheet" href="/css/twibbon.css">
+  <link rel="icon" type="image/png" href="/assets/logo-alyasini.png">
+  <style>
+    /* Homepage Specific Styles */
+    .hero-banner {
+      background: var(--bg-gradient);
+      color: #fff;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(135deg, rgba(251, 206, 7, 0.25), transparent);
+      transform: rotate(45deg);
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, rgba(0, 168, 107, 0.25), transparent);
+      transform: rotate(45deg);
+    }
+
+    .hero-logo-box {
+      display: inline-block;
+      background: #ffffff;
+      padding: 10px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-logo-img {
+      height: 64px;
+      max-width: 260px;
+      object-fit: contain;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      background: var(--gold);
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 18px;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 720px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .step-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 109, 78, 0.1);
+      color: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0 auto 1rem;
+    }
+
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .step-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .catalog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .catalog-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .public-camp-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .public-camp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(0, 78, 56, 0.15);
+    }
+
+    .public-frame-preview {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #004e38;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 1.5rem;
+    }
+
+    .public-frame-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+      transition: transform 0.3s;
+    }
+
+    .public-camp-card:hover .public-frame-img {
+      transform: scale(1.03);
+    }
+
+    .public-camp-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .public-camp-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .public-camp-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .public-camp-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
+      .hero-banner {
+        padding: 2.5rem 1rem;
+      }
+      .hero-logo-img {
+        height: 48px;
+        max-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-wrapper">
+        <img src="/assets/logo-alyasini.png" alt="Logo Pondok Pesantren Terpadu Al-Yasini" class="brand-logo-img">
+        <div class="brand-text">
+          <h1>PP. Terpadu Al-Yasini</h1>
+          <span>Haul Masyayikh Ke-24 & Silatnas 2026</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="/admin" class="btn-nav btn-gold">Portal Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-wrapper">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-logo-box">
+        <img src="/assets/logo-alyasini.png" alt="Logo Resmi Haul Masyayikh Ke-24" class="hero-logo-img">
+      </div>
+      <div class="hero-pill">Official Twibbon Portal</div>
+      <h2 class="hero-title">Haul Masyayikh Ke-24 & Silatnas Insani Alyasini 2026</h2>
+      <p class="hero-desc">
+        Pondok Pesantren Terpadu Al-Yasini, Areng-Areng, Wonorejo, Pasuruan.
+        Pasang twibbon kebersamaan kita, sesuaikan posisi foto dengan mudah, dan bagikan ke media sosial.
+      </p>
+    </div>
+
+    <!-- How it Works -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Pilih Desain Twibbon</h3>
+        <p class="step-text">Pilih kampanye acara atau desain bingkai resmi yang ingin Anda gunakan di bawah ini.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Upload & Atur Foto</h3>
+        <p class="step-text">Masukkan foto dari galeri HP, lalu geser (drag) dan cubit (pinch zoom) agar wajah pas di bingkai.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Unduh & Bagikan</h3>
+        <p class="step-text">Unduh hasil twibbon resolusi tinggi (HD) dan salin caption bawaan untuk dipasang ke media sosial.</p>
+      </div>
+    </div>
+
+    <!-- Campaign Catalog Section -->
+    <div class="catalog-header">
+      <h3 class="catalog-title">Pilihan Desain Twibbon Acara</h3>
+    </div>
+
+    <div class="catalog-grid" id="publicCatalogGrid">
+      <p style="color: #64748b; padding: 2rem;">Memuat daftar twibbon...</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p><strong>Pondok Pesantren Terpadu Al-Yasini</strong></p>
+    <p>Areng-Areng, Wonorejo, Pasuruan - Jawa Timur</p>
+    <p style="margin-top: 10px; font-size: 0.8rem;">
+      <a href="/admin">Portal Admin / Pengelola Twibbon</a> • Haul Masyayikh Ke-24 & Silatnas Insani 2026
+    </p>
+  </footer>
+
+  <script>
+    fetch('/api/public/campaigns')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('publicCatalogGrid');
+        const list = data.campaigns || [];
+        if (list.length === 0) {
+          grid.innerHTML = '<p style="color: #64748b;">Belum ada twibbon aktif saat ini.</p>';
+          return;
+        }
+
+        grid.innerHTML = list.map(c => `
+          <div class="public-camp-card">
+            <div class="public-frame-preview">
+              <img src="${c.frame_path}" alt="${c.title}" class="public-frame-img">
+            </div>
+            <div class="public-camp-content">
+              <h4 class="public-camp-title">${c.title}</h4>
+              <p class="public-camp-desc">${c.description || 'Pondok Pesantren Terpadu Al-Yasini Pasuruan.'}</p>
+              <div class="public-camp-meta">
+                <span>👁️ ${c.view_count || 0} Dilihat</span>
+                <span>•</span>
+                <span>📥 ${c.download_count || 0} Telah Mengunduh</span>
+              </div>
+              <a href="/${c.slug}" class="btn-primary-big btn-gold-big" style="text-decoration: none;">
+                <span>✨ Gunakan Twibbon Ini</span>
+              </a>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('publicCatalogGrid').innerHTML = '<p style="color: red;">Gagal memuat kampanye.</p>';
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+:root {
+  --primary: #006d4e;
+  --primary-dark: #004e38;
+  --primary-light: #00a86b;
+  --gold: #FBCE07;
+  --gold-dark: #d9a502;
+  --gold-light: #ffea79;
+  --bg-gradient: linear-gradient(145deg, #004e38 0%, #006d4e 50%, #003627 100%);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --surface-glass: rgba(255, 255, 255, 0.92);
+  --border: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-white: #ffffff;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 25px -5px rgba(0, 109, 78, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 35px -10px rgba(0, 78, 56, 0.25);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f1f5f9;
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Background Supergrafis Header Banner */
+.site-header {
+  background: var(--bg-gradient);
+  color: var(--text-white);
+  padding: 1.25rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 78, 56, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(251, 206, 7, 0.2), transparent);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: -30px;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, rgba(0, 168, 107, 0.2), transparent);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.header-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo-img {
+  height: 48px;
+  max-width: 180px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.brand-text h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.brand-text span {
+  font-size: 0.8rem;
+  color: var(--gold);
+  font-weight: 600;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.btn-nav:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-nav.btn-gold {
+  background: var(--gold);
+  color: #0f172a;
+  border: none;
+  font-weight: 700;
+}
+
+.btn-nav.btn-gold:hover {
+  background: var(--gold-light);
+  box-shadow: 0 4px 12px rgba(251, 206, 7, 0.4);
+}
+
+/* Main Container */
+.main-wrapper {
+  flex: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* Twibbon Public App Card */
+.twibbon-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.campaign-hero {
+  background: linear-gradient(135deg, rgba(0, 109, 78, 0.06) 0%, rgba(251, 206, 7, 0.08) 100%);
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.campaign-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.campaign-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.campaign-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Twibbon Interactive Area */
+.twibbon-workspace {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Canvas Viewport */
+.canvas-viewport-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 1.5rem;
+  background: #f1f5f9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  border: 2px solid var(--border);
+  user-select: none;
+  touch-action: none; /* Crucial for touch drag & pinch */
+}
+
+#twibbonCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+#twibbonCanvas:active {
+  cursor: grabbing;
+}
+
+/* Placeholder State before user uploads photo */
+.canvas-placeholder-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  padding: 2rem;
+  text-align: center;
+  z-index: 10;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.canvas-placeholder-overlay:hover {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.placeholder-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 109, 78, 0.3);
+  font-size: 2rem;
+}
+
+.placeholder-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 0.35rem;
+}
+
+.placeholder-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Control Controls Panel */
+.canvas-controls {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.control-row:last-child {
+  margin-bottom: 0;
+}
+
+.control-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 55px;
+  flex-shrink: 0;
+}
+
+.zoom-slider-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.btn-icon-sm:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.zoom-slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+  background: #cbd5e1;
+  outline: none;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.control-buttons-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.btn-action-tool {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-action-tool:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(0, 109, 78, 0.04);
+}
+
+.touch-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Upload & Download Big Action Buttons */
+.main-actions-grid {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-primary-big {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(0, 109, 78, 0.35);
+  text-decoration: none;
+}
+
+.btn-primary-big:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 109, 78, 0.45);
+  filter: brightness(1.05);
+}
+
+.btn-primary-big:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-gold-big {
+  background: linear-gradient(135deg, var(--gold) 0%, #eab308 100%);
+  color: #0f172a;
+  box-shadow: 0 4px 14px rgba(251, 206, 7, 0.35);
+}
+
+.btn-gold-big:hover:not(:disabled) {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 20px rgba(251, 206, 7, 0.45);
+}
+
+.btn-outline-big {
+  background: #fff;
+  color: var(--primary-dark);
+  border: 2px solid var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-outline-big:hover {
+  background: rgba(0, 109, 78, 0.05);
+}
+
+/* Caption Section */
+.caption-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.caption-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.caption-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-copy-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold);
+  color: #0f172a;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-copy-caption:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.caption-text-box {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.92rem;
+  white-space: pre-wrap;
+  color: #334155;
+  line-height: 1.6;
+  position: relative;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.hashtags-badge-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 1rem;
+}
+
+.tag-badge {
+  background: rgba(0, 109, 78, 0.08);
+  color: var(--primary-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* WhatsApp Share Bar */
+.share-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.btn-whatsapp {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: #25D366;
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-whatsapp:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+/* Toast Notifications */
+.toast-box {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0f172a;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast-box.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast-icon {
+  color: var(--gold);
+}
+
+/* Footer */
+.site-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: auto;
+  border-top: 4px solid var(--gold);
+}
+
+.site-footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Hidden file input */
+.hidden-input {
+  display: none !important;
+}
+
+/* Responsive adjust */
+@media (max-width: 600px) {
+  .site-header {
+    padding: 1rem 0.75rem;
+  }
+  .brand-logo-img {
+    height: 38px;
+    max-width: 140px;
+  }
+  .brand-text h1 {
+    font-size: 0.95rem;
+  }
+  .campaign-title {
+    font-size: 1.2rem;
+  }
+  .twibbon-workspace {
+    padding: 1rem 0.75rem;
+  }
+  .btn-primary-big {
+    font-size: 0.95rem;
+    padding: 12px 18px;
+  }
+}

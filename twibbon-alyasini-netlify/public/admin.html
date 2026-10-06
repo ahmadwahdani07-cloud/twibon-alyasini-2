@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Admin - Pengelola Twibbon Al-Yasini</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="icon" type="image/png" href="/assets/logo-alyasini.png">
+</head>
+<body>
+
+  <!-- ==================== 1. LOGIN SCREEN ==================== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <img src="/assets/logo-alyasini.png" alt="Logo Ponpes Al-Yasini" class="login-logo">
+      <h1 class="login-title">Portal Panitia & Admin</h1>
+      <p class="login-subtitle">Pengelola Twibbon Pondok Pesantren Terpadu Al-Yasini</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Username Panitia</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="Masukkan username" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="Masukkan password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-login-submit" id="btnLoginSubmit">Masuk ke Dapur Twibbon</button>
+      </form>
+
+      <div style="margin-top: 1.5rem; font-size: 0.8rem; color: #64748b; text-align: center;">
+        🔒 Akses terbatas khusus panitia & pengurus resmi.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 2. ADMIN DASHBOARD ==================== -->
+  <div class="admin-layout" id="dashboardScreen" style="display: none;">
+    <!-- Top Bar -->
+    <header class="admin-header">
+      <a href="/admin" class="admin-brand">
+        <img src="/assets/logo-alyasini.png" alt="Al-Yasini Logo">
+        <div class="admin-brand-info">
+          <h2>Dapur Pengelola Twibbon</h2>
+          <span>Haul Masyayikh Ke-24 & Silatnas 2026</span>
+        </div>
+      </a>
+      <div class="admin-header-actions">
+        <a href="/" target="_blank" class="btn-header">🌐 Lihat Web Publik</a>
+        <button class="btn-header" id="btnOpenChangePassword">🔑 Ganti Password</button>
+        <button class="btn-header btn-header-danger" id="btnLogout">🚪 Keluar</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- 4 Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📁</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotalCampaigns">0</div>
+            <div class="stat-title">Total Kampanye Acara</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👁️</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotalViews">0</div>
+            <div class="stat-title">Total Kunjungan Publik</div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-gold">
+          <div class="stat-icon">📥</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotalDownloads">0</div>
+            <div class="stat-title">Total Twibbon Diunduh</div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-gold">
+          <div class="stat-icon">📈</div>
+          <div class="stat-info">
+            <div class="stat-value" id="statConversion">0%</div>
+            <div class="stat-title">Tingkat Konversi Unduhan</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campaign Section Header -->
+      <div class="toolbar-header">
+        <div>
+          <h2 class="toolbar-title">Daftar Kampanye Twibbon</h2>
+          <p style="font-size: 0.85rem; color: #64748b;">Kelola tautan unik, bingkai transparan, dan caption acara untuk dibagikan.</p>
+        </div>
+        <button class="btn-create-campaign" id="btnOpenCreateModal">
+          <span>➕ Buat Kampanye Baru</span>
+        </button>
+      </div>
+
+      <!-- Campaign Cards Grid -->
+      <div class="campaigns-grid" id="campaignsGrid">
+        <p style="color: #64748b; padding: 2rem;">Memuat data kampanye...</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== 3. MODAL BUAT / EDIT KAMPANYE ==================== -->
+  <div class="modal-backdrop" id="campaignModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Buat Kampanye Twibbon Baru</h3>
+        <button class="modal-close" id="btnCloseModal">&times;</button>
+      </div>
+      <form id="campaignForm">
+        <input type="hidden" id="editCampaignId" value="">
+        <div class="modal-body">
+          <!-- Judul Acara -->
+          <div class="form-group">
+            <label class="form-label">Judul Acara / Kampanye *</label>
+            <input type="text" id="campTitle" class="form-input" placeholder="Contoh: Haul Masyayikh Ke-24 Dan Silatnas Insani 2026" required>
+          </div>
+
+          <!-- Tautan Unik / Slug -->
+          <div class="form-group">
+            <label class="form-label">Tautan Unik (Slug URL) *</label>
+            <input type="text" id="campSlug" class="form-input" placeholder="haul-24-alyasini" required>
+            <div class="url-preview-tag">
+              Tautan Publik: <span id="urlPreview">https://situs.com/haul-24-alyasini</span>
+            </div>
+          </div>
+
+          <!-- Upload Desain Bingkai (PNG Transparan) -->
+          <div class="form-group">
+            <label class="form-label">Upload Desain Bingkai (PNG Area Tengah Transparan) *</label>
+            <div class="frame-dropzone" id="frameDropzone">
+              <input type="file" id="frameFileInput" class="hidden-input" accept="image/png,image/svg+xml">
+              <div id="dropzoneText">
+                <div style="font-size: 2rem; margin-bottom: 4px;">🖼️</div>
+                <strong>Klik atau Geser File Bingkai ke Sini</strong>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                  Format PNG dengan lubang tengah transparan (Rekomendasi rasio 1:1 / 1080x1080 px).
+                </p>
+              </div>
+              <div class="frame-preview-area" id="framePreviewArea" style="display: none;">
+                <img id="framePreviewImg" src="" alt="Preview Bingkai" class="frame-preview-img">
+                <p style="font-size: 0.78rem; color: #006d4e; margin-top: 4px; font-weight: bold;">✓ Desain bingkai siap diunggah</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deskripsi Acara -->
+          <div class="form-group">
+            <label class="form-label">Deskripsi Singkat Acara</label>
+            <textarea id="campDesc" class="form-input form-textarea" placeholder="Informasi singkat tentang acara, lokasi, atau tanggal pelaksanaan..."></textarea>
+          </div>
+
+          <!-- Pengaturan Caption Bawaan -->
+          <div class="form-group">
+            <label class="form-label">Pengaturan Caption Bawaan (Otomatis dapat disalin pengunjung)</label>
+            <textarea id="campCaption" class="form-input form-textarea" style="min-height: 100px;" placeholder="Tuliskan ucapan atau ajakan yang nanti langsung siap di-copy pengunjung ke Instagram/Facebook/WhatsApp..."></textarea>
+          </div>
+
+          <!-- Pengaturan Hashtag -->
+          <div class="form-group">
+            <label class="form-label">Hashtag Media Sosial</label>
+            <input type="text" id="campHashtags" class="form-input" placeholder="#HaulMasyayikh24 #AlYasini2026 #SilatnasInsani">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-header" id="btnCancelModal">Batal</button>
+          <button type="submit" class="btn-create-campaign" id="btnSaveCampaign">💾 Simpan Kampanye</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 4. MODAL GANTI PASSWORD ==================== -->
+  <div class="modal-backdrop" id="passwordModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔑 Ganti Password Admin</h3>
+        <button class="modal-close" id="btnClosePasswordModal">&times;</button>
+      </div>
+      <form id="passwordForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Password Saat Ini *</label>
+            <input type="password" id="currentPassword" class="form-input" placeholder="Masukkan password saat ini" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password Baru *</label>
+            <input type="password" id="newPassword" class="form-input" placeholder="Minimal 6 karakter" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Konfirmasi Password Baru *</label>
+            <input type="password" id="confirmPassword" class="form-input" placeholder="Ulangi password baru" minlength="6" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-header" id="btnCancelPasswordModal">Batal</button>
+          <button type="submit" class="btn-create-campaign" id="btnSavePassword">Simpan Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Box -->
+  <div class="toast-box" id="adminToast">
+    <span class="toast-icon">✓</span>
+    <span id="adminToastMsg">Berhasil!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/admin.js"></script>
+</body>
+</html>

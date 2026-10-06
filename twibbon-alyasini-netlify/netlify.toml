@@ -1,0 +1,37 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22.12.0"
+
+# 1. API Route -> Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# 2. Portal Admin
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin.html"
+  status = 200
+
+# 3. Campaign Slugs (e.g. /c/haul-24-alyasini)
+[[redirects]]
+  from = "/c/*"
+  to = "/twibbon.html"
+  status = 200
+
+# 4. Fallback for custom slug URLs (e.g. /haul-24-alyasini, /kegiatan-agustus)
+# Static files in public/ are served automatically first.
+[[redirects]]
+  from = "/*"
+  to = "/twibbon.html"
+  status = 200

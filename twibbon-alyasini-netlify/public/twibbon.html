@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Twibbon - Haul Masyayikh Ke-24 Dan Silatnas Insani Alyasini</title>
+  <link rel="stylesheet" href="/css/twibbon.css">
+  <link rel="icon" type="image/png" href="/assets/logo-alyasini.png">
+</head>
+<body>
+
+  <!-- Top Header with Brand Logo -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-wrapper">
+        <img src="/assets/logo-alyasini.png" alt="Logo Al-Yasini" class="brand-logo-img">
+        <div class="brand-text">
+          <h1>PP. Terpadu Al-Yasini</h1>
+          <span>Haul Masyayikh Ke-24 & Silatnas 2026</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="btn-nav">Semua Twibbon</a>
+        <a href="/admin" class="btn-nav btn-gold">Portal Panitia</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+    <div class="twibbon-card">
+      <!-- Campaign Hero Banner -->
+      <div class="campaign-hero">
+        <span class="campaign-badge" id="campaignBadge">Twibbon Resmi</span>
+        <h2 class="campaign-title" id="campaignTitle">Memuat Kampanye Twibbon...</h2>
+        <p class="campaign-desc" id="campaignDesc">Silakan masukkan foto Anda, sesuaikan posisi, dan unduh twibbon siap pakai.</p>
+      </div>
+
+      <!-- Twibbon Interactive Area -->
+      <div class="twibbon-workspace">
+        
+        <!-- Canvas Viewport -->
+        <div class="canvas-viewport-wrapper" id="canvasContainer">
+          <canvas id="twibbonCanvas" width="440" height="440"></canvas>
+
+          <!-- Placeholder when no photo loaded yet -->
+          <div class="canvas-placeholder-overlay" id="placeholderOverlay">
+            <div class="placeholder-icon">📷</div>
+            <div class="placeholder-title">Pilih Foto Anda</div>
+            <div class="placeholder-subtitle">Ketuk di sini untuk mengambil foto dari Galeri HP atau Kamera</div>
+          </div>
+        </div>
+
+        <input type="file" id="photoInput" class="hidden-input" accept="image/jpeg,image/png,image/webp,image/heic">
+
+        <!-- Canvas Controls (Zoom, Rotate, Reset) -->
+        <div class="canvas-controls" id="canvasControls" style="display: none;">
+          <div class="control-row">
+            <span class="control-label">Perbesar:</span>
+            <div class="zoom-slider-wrapper">
+              <button class="btn-icon-sm" id="btnZoomOut" title="Perkecil">−</button>
+              <input type="range" id="zoomSlider" class="zoom-slider" min="0.2" max="4.0" step="0.02" value="1.0">
+              <button class="btn-icon-sm" id="btnZoomIn" title="Perbesar">+</button>
+            </div>
+          </div>
+
+          <div class="control-buttons-row">
+            <button class="btn-action-tool" id="btnRotateLeft">↺ Putar Kiri</button>
+            <button class="btn-action-tool" id="btnRotateRight">↻ Putar Kanan</button>
+            <button class="btn-action-tool" id="btnReset">⟲ Reset</button>
+            <button class="btn-action-tool" id="btnChangePhoto">📁 Ganti Foto</button>
+          </div>
+
+          <div class="touch-hint">
+            <span>👆 Geser foto untuk posisi pas • ✌️ Cubit (pinch) untuk zoom di HP</span>
+          </div>
+        </div>
+
+        <!-- Main Buttons -->
+        <div class="main-actions-grid">
+          <button class="btn-primary-big" id="btnSelectPhoto">
+            <span>📷 Pilih Foto dari Galeri / Kamera</span>
+          </button>
+          <button class="btn-primary-big btn-gold-big" id="btnDownload" disabled style="display: none;">
+            <span>⬇ Unduh Twibbon Hasil (HD)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Caption & Social Media Sharing -->
+    <div class="caption-card" id="captionSection">
+      <div class="caption-header">
+        <h3 class="caption-title">
+          <span>📝 Teks Caption & Hashtag Medsos</span>
+        </h3>
+        <button class="btn-copy-caption" id="btnCopyCaption">
+          <span>📋 Salin Caption</span>
+        </button>
+      </div>
+
+      <div class="caption-text-box" id="captionBox">
+        Memuat teks caption...
+      </div>
+
+      <div class="hashtags-badge-container" id="hashtagsContainer"></div>
+
+      <div class="share-actions-row">
+        <a href="#" target="_blank" class="btn-whatsapp" id="btnShareWa">
+          <span>💬 Bagikan ke WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast-box" id="toastBox">
+    <span class="toast-icon">✓</span>
+    <span id="toastMessage">Tersalin ke clipboard!</span>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p><strong>Haul Masyayikh Ke-24 & Silatnas Insani Alyasini 2026</strong></p>
+    <p>Pondok Pesantren Terpadu Al-Yasini, Areng-Areng, Wonorejo, Pasuruan</p>
+    <p style="margin-top: 8px; font-size: 0.8rem;">
+      <a href="/admin">Portal Admin Panitia</a> • Sambung Sanad & Silaturahmi Lintas Generasi
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/canvas-engine.js"></script>
+  <script>
+    (function() {
+      // Determine campaign slug from URL path: /haul-24-alyasini or query param ?slug=...
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      let campaignSlug = pathParts[0] || 'haul-24-alyasini';
+      if (campaignSlug === 'twibbon.html' || campaignSlug === 'c') {
+        campaignSlug = pathParts[1] || 'haul-24-alyasini';
+      }
+
+      const canvas = document.getElementById('twibbonCanvas');
+      const placeholderOverlay = document.getElementById('placeholderOverlay');
+      const photoInput = document.getElementById('photoInput');
+      const btnSelectPhoto = document.getElementById('btnSelectPhoto');
+      const btnChangePhoto = document.getElementById('btnChangePhoto');
+      const btnDownload = document.getElementById('btnDownload');
+      const canvasControls = document.getElementById('canvasControls');
+      const zoomSlider = document.getElementById('zoomSlider');
+      const btnZoomIn = document.getElementById('btnZoomIn');
+      const btnZoomOut = document.getElementById('btnZoomOut');
+      const btnRotateLeft = document.getElementById('btnRotateLeft');
+      const btnRotateRight = document.getElementById('btnRotateRight');
+      const btnReset = document.getElementById('btnReset');
+      const btnCopyCaption = document.getElementById('btnCopyCaption');
+      const btnShareWa = document.getElementById('btnShareWa');
+      const toastBox = document.getElementById('toastBox');
+      const toastMessage = document.getElementById('toastMessage');
+
+      let currentCampaign = null;
+      let engine = null;
+
+      function showToast(msg) {
+        toastMessage.textContent = msg;
+        toastBox.classList.add('show');
+        setTimeout(() => toastBox.classList.remove('show'), 2600);
+      }
+
+      // Initialize engine
+      engine = new TwibbonEngine(canvas, {
+        onPhotoLoaded: (img) => {
+          placeholderOverlay.style.display = 'none';
+          canvasControls.style.display = 'block';
+          btnDownload.style.display = 'inline-flex';
+          btnDownload.removeAttribute('disabled');
+          btnSelectPhoto.style.display = 'none';
+          showToast('Foto berhasil dimuat! Geser & perbesar sesuai bingkai');
+        },
+        onTransformChange: (t) => {
+          if (zoomSlider) {
+            zoomSlider.value = t.scale.toFixed(2);
+          }
+        }
+      });
+
+      // Fetch campaign data
+      fetch(`/api/public/campaign/${campaignSlug}`)
+        .then(r => {
+          if (!r.ok) throw new Error('Kampanye tidak ditemukan');
+          return r.json();
+        })
+        .then(data => {
+          currentCampaign = data.campaign;
+          document.title = `${currentCampaign.title} - Twibbon Al-Yasini`;
+          document.getElementById('campaignTitle').textContent = currentCampaign.title;
+          document.getElementById('campaignDesc').textContent = currentCampaign.description || 'Pondok Pesantren Terpadu Al-Yasini';
+          
+          // Caption & Hashtags
+          const captionText = `${currentCampaign.caption || ''}\n\n${currentCampaign.hashtags || ''}`.trim();
+          document.getElementById('captionBox').textContent = captionText;
+
+          // Render hashtag badges
+          const tagsContainer = document.getElementById('hashtagsContainer');
+          tagsContainer.innerHTML = '';
+          if (currentCampaign.hashtags) {
+            const tags = currentCampaign.hashtags.split(/\s+/).filter(Boolean);
+            tags.forEach(tag => {
+              const span = document.createElement('span');
+              span.className = 'tag-badge';
+              span.textContent = tag.startsWith('#') ? tag : '#' + tag;
+              tagsContainer.appendChild(span);
+            });
+          }
+
+          // WhatsApp link setup
+          const pageUrl = window.location.href;
+          const waText = encodeURIComponent(`*${currentCampaign.title}*\n\n${captionText}\n\nPasang twibbon Anda di sini:\n${pageUrl}`);
+          btnShareWa.href = `https://api.whatsapp.com/send?text=${waText}`;
+
+          // Load Frame into Canvas
+          return engine.loadFrame(currentCampaign.frame_path);
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('campaignTitle').textContent = 'Kampanye Tidak Ditemukan';
+          document.getElementById('campaignDesc').textContent = 'Mohon periksa kembali tautan yang Anda gunakan.';
+        });
+
+      // Photo upload events
+      placeholderOverlay.addEventListener('click', () => photoInput.click());
+      btnSelectPhoto.addEventListener('click', () => photoInput.click());
+      btnChangePhoto.addEventListener('click', () => photoInput.click());
+
+      photoInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          engine.loadUserPhoto(file);
+        }
+      });
+
+      // Slider and Zoom
+      zoomSlider.addEventListener('input', (e) => {
+        engine.setScale(parseFloat(e.target.value));
+      });
+
+      btnZoomIn.addEventListener('click', () => engine.zoomBy(1.12));
+      btnZoomOut.addEventListener('click', () => engine.zoomBy(0.88));
+
+      // Rotate and Reset
+      btnRotateLeft.addEventListener('click', () => engine.rotateBy(-90));
+      btnRotateRight.addEventListener('click', () => engine.rotateBy(90));
+      btnReset.addEventListener('click', () => engine.resetTransform());
+
+      // Download Action
+      btnDownload.addEventListener('click', async () => {
+        if (!engine.userImage) {
+          showToast('Silakan pilih foto terlebih dahulu');
+          return;
+        }
+
+        btnDownload.setAttribute('disabled', 'true');
+        btnDownload.innerHTML = '<span>⏳ Memproses Gambar HD...</span>';
+
+        try {
+          // Notify backend for download stat
+          fetch(`/api/public/campaign/${campaignSlug}/download`, { method: 'POST' }).catch(() => {});
+
+          const blob = await engine.exportBlob('image/png', 0.95);
+          const safeSlug = (currentCampaign ? currentCampaign.slug : 'twibbon-alyasini');
+          const fileName = `twibbon-${safeSlug}-${Date.now()}.png`;
+
+          // Check if Web Share API is available with file sharing support
+          if (navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, { type: 'image/png' })] })) {
+            const file = new File([blob], fileName, { type: 'image/png' });
+            try {
+              await navigator.share({
+                title: currentCampaign.title,
+                text: currentCampaign.caption,
+                files: [file]
+              });
+              showToast('Twibbon berhasil dibagikan!');
+              btnDownload.removeAttribute('disabled');
+              btnDownload.innerHTML = '<span>⬇ Unduh Twibbon Hasil (HD)</span>';
+              return;
+            } catch (shareErr) {
+              // User cancelled share or fallback to direct download
+            }
+          }
+
+          // Direct browser download
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 1000);
+
+          showToast('Twibbon berhasil diunduh ke galeri/HP Anda!');
+        } catch (err) {
+          console.error('Download error:', err);
+          showToast('Terjadi kesalahan saat mengunduh gambar');
+        } finally {
+          btnDownload.removeAttribute('disabled');
+          btnDownload.innerHTML = '<span>⬇ Unduh Twibbon Hasil (HD)</span>';
+        }
+      });
+
+      // Copy Caption
+      btnCopyCaption.addEventListener('click', async () => {
+        const text = document.getElementById('captionBox').textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          btnCopyCaption.textContent = '✓ Tersalin!';
+          showToast('Teks caption dan hashtag berhasil disalin!');
+          setTimeout(() => {
+            btnCopyCaption.textContent = '📋 Salin Caption';
+          }, 2500);
+        } catch (err) {
+          // Fallback
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast('Teks caption berhasil disalin!');
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
